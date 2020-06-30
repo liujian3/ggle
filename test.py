@@ -64,7 +64,7 @@ if __name__=='__main__':
     for s in ss:
         t=threading.Thread(target=geturl, args=(c,s,))
         gs.append(t)
-        t.start
+        t.start()
         c+=1
         print(c)
     [t.join() for t in gs]
