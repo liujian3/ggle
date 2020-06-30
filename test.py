@@ -22,7 +22,7 @@ def geturl(c,s,outfile):
         fpth=outfile+str(c)+'t.html'
         f=open(fpth,'w')
         ssoup=BeautifulSoup(res.content,features="html.parser")
-        f.write(ssoup.text)
+        f.write('<meta charset="utf-8">'+ssoup.text)
         f.close()
         child.a['href']=url
         tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
