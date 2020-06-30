@@ -38,12 +38,22 @@ if __name__=='__main__':
             url=child.a['href']
             url=urllib.parse.unquote(geturlparam(url)[1]['q'])
             res=requests.get(url)
-            f=open(str(c)+'.html','w')
+            fpth=str(c)+'h.html'
+            f=open(fpth,'w')
             f.write(res.content.decode('utf8'))
             f.close()
             child.a['href']=url
-            tag=soup.new_tag('a', attrs={'href':'/test/'+str(c)+'.html'})
+            tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
             tag.append('快照')
+            child.append(tag)
+            fpth=str(c)+'t.html'
+            f=open(fpth,'w')
+            ssoup=BeautifulSoup(res.content,features="html.parser")
+            f.write(ssoup.text)
+            f.close()
+            child.a['href']=url
+            tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
+            tag.append('文本')
             child.append(tag)
             c+=1
             print(c)
