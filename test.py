@@ -46,7 +46,7 @@ if __name__=='__main__':
             tag.append('快照')
             child.append(tag)
             c+=1
-            #print(url)
+            print(c)
         except Exception:
             traceback.print_exc()
 
