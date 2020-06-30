@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import sys
 import urllib
 import traceback
-import gevent
+import threading
 def geturl(c,s):
     try:
         child=next(s.children)
@@ -62,10 +62,12 @@ if __name__=='__main__':
     c=0
     gs=[]
     for s in ss:
-        gs.append(gevent.spawn(geturl,c,s))
+        t=threading.Thread(target=geturl, args=(c,s,))
+        gs.append(t)
+        t.start
         c+=1
         print(c)
-    gevent.joinall(gs)
+    [t.join() for t in gs]
     f=open(outfile,'w')
     f.write(str(soup))
     f.close()
