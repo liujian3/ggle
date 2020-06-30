@@ -20,9 +20,9 @@ def geturl(c,s,outfile):
         tag.append('快照')
         child.append(tag)
         fpth=outfile+str(c)+'t.html'
-        f=open(fpth,'w')
+        f=open(fpth,'w',encoding='utf8')
         ssoup=BeautifulSoup(res.content,features="html.parser")
-        f.write('<meta charset="utf-8">'+ssoup.text)
+        f.write(ssoup.text)
         f.close()
         child.a['href']=url
         tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
