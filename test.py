@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 import urllib
+import traceback
 def geturlparam(p):
     x=p.find('?')+1
     return p[:x-1] if x else p,dict([(i.split('=')[0].strip(),i.split('=')[1].strip()) for i in p[x:].split('&') if i.strip()])
@@ -44,7 +45,7 @@ if __name__=='__main__':
             c+=1
             #print(url)
         except Exception:
-            pass
+            traceback.print_exc()
 
     f=open(outfile,'w')
     f.write(str(soup))
