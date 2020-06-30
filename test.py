@@ -12,8 +12,8 @@ def geturl(c,s,outfile):
         url=urllib.parse.unquote(geturlparam(url)[1]['q'])
         res=requests.get(url)
         fpth=outfile+str(c)+'h.html'
-        f=open(fpth,'w')
-        f.write(res.content.decode('utf8'))
+        f=open(fpth,'wb')
+        f.write(res.content)
         f.close()
         child.a['href']=url
         tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
