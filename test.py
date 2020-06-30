@@ -5,13 +5,13 @@ import sys
 import urllib
 import traceback
 import threading
-def geturl(c,s):
+def geturl(c,s,outfile):
     try:
         child=next(s.children)
         url=child.a['href']
         url=urllib.parse.unquote(geturlparam(url)[1]['q'])
         res=requests.get(url)
-        fpth=str(c)+'h.html'
+        fpth=outfile+str(c)+'h.html'
         f=open(fpth,'w')
         f.write(res.content.decode('utf8'))
         f.close()
@@ -19,7 +19,7 @@ def geturl(c,s):
         tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
         tag.append('快照')
         child.append(tag)
-        fpth=str(c)+'t.html'
+        fpth=outfile+str(c)+'t.html'
         f=open(fpth,'w')
         ssoup=BeautifulSoup(res.content,features="html.parser")
         f.write(ssoup.text)
@@ -43,7 +43,7 @@ if __name__=='__main__':
     # test.py url
     print('python xx.py g searchword numitem startitem outfile')
     pn=len(sys.argv)
-    outfile='test.html'
+    outfile='test'
     if pn==2:
         url=sys.argv[1]
     elif pn>2:
@@ -62,12 +62,12 @@ if __name__=='__main__':
     c=0
     gs=[]
     for s in ss:
-        t=threading.Thread(target=geturl, args=(c,s,))
+        t=threading.Thread(target=geturl, args=(c,s,outfile))
         gs.append(t)
         t.start()
         c+=1
         print(c)
     [t.join() for t in gs]
-    f=open(outfile,'w')
+    f=open(outfile+'.html','w')
     f.write(str(soup))
     f.close()
