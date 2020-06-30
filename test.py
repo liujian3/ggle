@@ -39,7 +39,7 @@ if __name__=='__main__':
             url=urllib.parse.unquote(geturlparam(url)[1]['q'])
             res=requests.get(url)
             f=open(str(c)+'.html','w')
-            f.write(res.content)
+            f.write(res.content.decode('utf8'))
             f.close()
             child.a['href']='/test/'+str(c)+'.html'
             c+=1
