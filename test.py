@@ -39,5 +39,5 @@ if __name__=='__main__':
             pass
 
     f=open('test.html','w')
-    f.write(soup.contents[1])
+    f.write(str(soup))
     f.close()
