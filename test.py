@@ -25,7 +25,7 @@ if __name__=='__main__':
             pass
 
     res=requests.get(url)
-    soup=BeautifulSoup(res.content)
+    soup=BeautifulSoup(res.content,features="html.parser")
     
     ss=soup.findAll(class_='ZINbbc xpd O9g5cc uUPGi')
     for s in ss:
@@ -34,10 +34,10 @@ if __name__=='__main__':
             url=child.a['href']
             url=urllib.parse.unquote(geturlparam(url)[1]['q'])
             child.a['href']=url
-            print(url)
+            #print(url)
         except Exception:
             pass
 
     f=open('test.html','w')
-    f.write(soup.text)
+    f.write(soup.contents[1])
     f.close()
