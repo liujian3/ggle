@@ -41,7 +41,10 @@ if __name__=='__main__':
             f=open(str(c)+'.html','w')
             f.write(res.content.decode('utf8'))
             f.close()
-            child.a['href']='/test/'+str(c)+'.html'
+            child.a['href']=url
+            tag=soup.new_tag('a', attrs={'href':'/test/'+str(c)+'.html'})
+            tag.append('快照')
+            child.append(tag)
             c+=1
             #print(url)
         except Exception:
