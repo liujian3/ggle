@@ -12,8 +12,9 @@ if __name__=='__main__':
     start='0'
     print(sys.argv)
     # test.py url
-    print('python xx.py g searchword numitem startitem')
+    print('python xx.py g searchword numitem startitem outfile')
     pn=len(sys.argv)
+    outfile='test.html'
     if pn==2:
         url=sys.argv[1]
     elif pn>2:
@@ -21,6 +22,7 @@ if __name__=='__main__':
         try:
             url+='&num='+sys.argv[3]
             url+='&start='+sys.argv[4]
+            outfile=sys.argv[5]
         except Exception:
             pass
 
@@ -28,16 +30,22 @@ if __name__=='__main__':
     soup=BeautifulSoup(res.content,features="html.parser")
     
     ss=soup.findAll(class_='ZINbbc xpd O9g5cc uUPGi')
+    c=0
     for s in ss:
         try:
             child=next(s.children)
             url=child.a['href']
             url=urllib.parse.unquote(geturlparam(url)[1]['q'])
-            child.a['href']=url
+            res=requests.get(url)
+            f=open(str(c)+'.html','w')
+            f.write(res.context)
+            f.close()
+            child.a['href']='/test/'+str(c)+'.html'
+            c+=1
             #print(url)
         except Exception:
             pass
 
-    f=open('test.html','w')
+    f=open(outfile,'w')
     f.write(str(soup))
     f.close()
