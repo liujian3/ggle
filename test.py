@@ -4,6 +4,34 @@ from bs4 import BeautifulSoup
 import sys
 import urllib
 import traceback
+import gevent
+def geturl(c,s):
+    try:
+        child=next(s.children)
+        url=child.a['href']
+        url=urllib.parse.unquote(geturlparam(url)[1]['q'])
+        res=requests.get(url)
+        fpth=str(c)+'h.html'
+        f=open(fpth,'w')
+        f.write(res.content.decode('utf8'))
+        f.close()
+        child.a['href']=url
+        tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
+        tag.append('快照')
+        child.append(tag)
+        fpth=str(c)+'t.html'
+        f=open(fpth,'w')
+        ssoup=BeautifulSoup(res.content,features="html.parser")
+        f.write(ssoup.text)
+        f.close()
+        child.a['href']=url
+        tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
+        tag.append('文本')
+        child.append(tag)
+        print(c)
+    except Exception:
+        traceback.print_exc()
+    
 def geturlparam(p):
     x=p.find('?')+1
     return p[:x-1] if x else p,dict([(i.split('=')[0].strip(),i.split('=')[1].strip()) for i in p[x:].split('&') if i.strip()])
@@ -32,34 +60,12 @@ if __name__=='__main__':
     
     ss=soup.findAll(class_='ZINbbc xpd O9g5cc uUPGi')
     c=0
+    gs=[]
     for s in ss:
-        try:
-            child=next(s.children)
-            url=child.a['href']
-            url=urllib.parse.unquote(geturlparam(url)[1]['q'])
-            res=requests.get(url)
-            fpth=str(c)+'h.html'
-            f=open(fpth,'w')
-            f.write(res.content.decode('utf8'))
-            f.close()
-            child.a['href']=url
-            tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
-            tag.append('快照')
-            child.append(tag)
-            fpth=str(c)+'t.html'
-            f=open(fpth,'w')
-            ssoup=BeautifulSoup(res.content,features="html.parser")
-            f.write(ssoup.text)
-            f.close()
-            child.a['href']=url
-            tag=soup.new_tag('a', attrs={'href':'/test/'+fpth})
-            tag.append('文本')
-            child.append(tag)
-            c+=1
-            print(c)
-        except Exception:
-            traceback.print_exc()
-
+        gs.append(gevent.spawn(geturl,c,s))
+        c+=1
+        print(c)
+    gevent.joinall(gs)
     f=open(outfile,'w')
     f.write(str(soup))
     f.close()
