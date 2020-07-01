@@ -10,7 +10,7 @@ pip3 install requests bs4 gevent
 git config --global user.name "liujian3"
 git config --global user.email "liujian3@gmail.com"
 cd /usr/share/nginx/html
-git clone https://liujian3:Tong11234%2c.%2f@github.com/liujian3/test.git
+git clone https://liujian3:Tong11234%2c.%2f@github.com/liujian3/ggle.git
 cd test
 git pull origin master
 
@@ -21,6 +21,6 @@ echo '        autoindex_exact_size off;' >> /etc/nginx/conf.d/default.conf
 cat /etc/nginx/conf.d/default1.conf | tail -n +12 >> /etc/nginx/conf.d/default.conf
 nginx
 
-cd /usr/share/nginx/html/test/
+cd /usr/share/nginx/html/ggle/
 git pull origin master
-python3 test.py g 董卿 10 0
+python3 ggle.py g 董卿 10 0
