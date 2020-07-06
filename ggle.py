@@ -51,12 +51,10 @@ if __name__=='__main__':
         url=sys.argv[1]
     elif pn>2:
         source=sys.argv[1]
-        if source=='web':
-            url='http://www.google.com/search?q='
-        elif source=='news':
-            url='http://news.google.com/news?q='
+        url='http://www.google.com/search?q='
         url+=sys.argv[2]
         try:
+            url+='&source=lnms&tbm='+sys.argv[2]
             url+='&num='+sys.argv[3]
             url+='&start='+sys.argv[4]
             outfile=sys.argv[5]
