@@ -51,6 +51,7 @@ if __name__=='__main__':
     elif pn>2:
         url='http://www.google.com/search?q='+sys.argv[2]
         try:
+            url+='&source='+sys.argv[1]
             url+='&num='+sys.argv[3]
             url+='&start='+sys.argv[4]
             outfile=sys.argv[5]
