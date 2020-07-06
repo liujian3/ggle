@@ -58,7 +58,8 @@ if __name__=='__main__':
             outfile=sys.argv[5]
         except Exception:
             pass
-    outfile=os.path.dirname(sys.argv[0])+'/'+outfile
+    fpth=os.path.dirname(sys.argv[0])
+    outfile=(fpth if fpth else '.')+'/'+outfile
     res=requests.get(url)
     soup=BeautifulSoup(res.content,features="html.parser")
     
