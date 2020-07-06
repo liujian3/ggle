@@ -2,6 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 import sys
+import os
 import urllib
 import traceback
 import threading
@@ -35,6 +36,7 @@ def geturl(c,s,outfile):
 def geturlparam(p):
     x=p.find('?')+1
     return p[:x-1] if x else p,dict([(i.split('=')[0].strip(),i.split('=')[1].strip()) for i in p[x:].split('&') if i.strip()])
+
 if __name__=='__main__':
     url='http://www.google.com/search?q=%e5%be%90%e6%99%93%e4%b8%9c'
     num='10'
@@ -43,7 +45,7 @@ if __name__=='__main__':
     # test.py url
     print('python xx.py g searchword numitem startitem outfile')
     pn=len(sys.argv)
-    outfile='/usr/share/nginx/html/ggle/test'
+    outfile='test'
     if pn==2:
         url=sys.argv[1]
     elif pn>2:
@@ -54,7 +56,7 @@ if __name__=='__main__':
             outfile=sys.argv[5]
         except Exception:
             pass
-
+    outfile=os.path.dirname(sys.argv[0])+'/'+outfile
     res=requests.get(url)
     soup=BeautifulSoup(res.content,features="html.parser")
     
