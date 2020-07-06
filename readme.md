@@ -5,8 +5,7 @@
 
 # Run
 - ```git clone https://github.com/liujian3/ggle.git```
-- ```cd ggle```
-- ```docker build -t ggle:v1 . -f Dockerfile```
+- ```docker build -t ggle:v1 . -f ./ggle/Dockerfile```
 - ```docker run -d -p 80:80 --name gglex ggle:v1```
 
 # Test
