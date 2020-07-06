@@ -9,5 +9,5 @@
 
 # Test
 - ```docker exec -it gglex python3 /usr/share/nginx/html/ggle/ggle.py g "key words" 10 0```
-- key words, pages 10(max 100), start 0
+- key words, pages default 10(max 100), start default 0
 - access to the ```yourip:80/ggle``` and you will see the nginx default web page
