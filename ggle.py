@@ -43,7 +43,7 @@ if __name__=='__main__':
     # test.py url
     print('python xx.py g searchword numitem startitem outfile')
     pn=len(sys.argv)
-    outfile='test'
+    outfile='/usr/share/nginx/html/ggle/test'
     if pn==2:
         url=sys.argv[1]
     elif pn>2:
